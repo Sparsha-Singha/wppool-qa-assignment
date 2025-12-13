@@ -1,0 +1,11 @@
+# Node
+node_modules/
+package-lock.json
+
+# Cypress / Logs
+cypress/videos/
+cypress/screenshots/
+
+# Env files
+.env
+.DS_Store
