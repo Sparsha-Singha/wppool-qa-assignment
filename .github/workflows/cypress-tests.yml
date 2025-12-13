@@ -1,43 +1,35 @@
 name: Cypress Tests
-
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-
     env:
-  WP_BASE_URL: ${{ secrets.WP_BASE_URL }}
-  WP_USERNAME: ${{ secrets.WP_USERNAME }}
-  WP_PASSWORD: ${{ secrets.WP_PASSWORD }}
-  SHEET_URL: ${{ secrets.SHEET_URL }}
-  WP_PHONE: ${{ secrets.WP_PHONE }}
-  WP_EMAIL: ${{ secrets.WP_EMAIL }}
-  WP_DISTRICT: ${{ secrets.WP_DISTRICT }}
-  WP_COUNTRY: ${{ secrets.WP_COUNTRY }}
-  WP_CITY: ${{ secrets.WP_CITY }}
-  WP_FIRST_NAME: ${{ secrets.WP_FIRST_NAME }}
-  WP_LAST_NAME: ${{ secrets.WP_LAST_NAME }}
-  WP_ADDRESS: ${{ secrets.WP_ADDRESS }}
-  WP_POSTCODE: ${{ secrets.WP_POSTCODE }}
-
-
+      WP_BASE_URL: ${{ secrets.WP_BASE_URL }}
+      WP_USERNAME: ${{ secrets.WP_USERNAME }}
+      WP_PASSWORD: ${{ secrets.WP_PASSWORD }}
+      SHEET_URL: ${{ secrets.SHEET_URL }}
+      WP_PHONE: ${{ secrets.WP_PHONE }}
+      WP_EMAIL: ${{ secrets.WP_EMAIL }}
+      WP_DISTRICT: ${{ secrets.WP_DISTRICT }}
+      WP_COUNTRY: ${{ secrets.WP_COUNTRY }}
+      WP_CITY: ${{ secrets.WP_CITY }}
+      WP_FIRST_NAME: ${{ secrets.WP_FIRST_NAME }}
+      WP_LAST_NAME: ${{ secrets.WP_LAST_NAME }}
+      WP_ADDRESS: ${{ secrets.WP_ADDRESS }}
+      WP_POSTCODE: ${{ secrets.WP_POSTCODE }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-
+      
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
-
-      - name: Install Dependencies
-        run: npm install
-
+      
       - name: Setup Cypress Cache
         uses: actions/cache@v3
         with:
@@ -45,11 +37,13 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-
+      
+      - name: Install Dependencies
+        run: npm ci
+      
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v5
         with:
           install: false
-          start: npm start
           command: npm test
           browser: chrome
