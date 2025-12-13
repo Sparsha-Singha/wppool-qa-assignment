@@ -10,6 +10,22 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
 
+    env:
+  WP_BASE_URL: ${{ secrets.WP_BASE_URL }}
+  WP_USERNAME: ${{ secrets.WP_USERNAME }}
+  WP_PASSWORD: ${{ secrets.WP_PASSWORD }}
+  SHEET_URL: ${{ secrets.SHEET_URL }}
+  WP_PHONE: ${{ secrets.WP_PHONE }}
+  WP_EMAIL: ${{ secrets.WP_EMAIL }}
+  WP_DISTRICT: ${{ secrets.WP_DISTRICT }}
+  WP_COUNTRY: ${{ secrets.WP_COUNTRY }}
+  WP_CITY: ${{ secrets.WP_CITY }}
+  WP_FIRST_NAME: ${{ secrets.WP_FIRST_NAME }}
+  WP_LAST_NAME: ${{ secrets.WP_LAST_NAME }}
+  WP_ADDRESS: ${{ secrets.WP_ADDRESS }}
+  WP_POSTCODE: ${{ secrets.WP_POSTCODE }}
+
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -33,7 +49,10 @@ jobs:
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v5
         with:
+          install: false
           start: npm start
-          wait-on: 'http://localhost:8080'  # or your WP_BASE_URL if needed
-          wait-on-timeout: 60
+          command: npm test
           browser: chrome
+          #wait-on: 'http://localhost:8080'  # or your WP_BASE_URL if needed
+          #wait-on-timeout: 60
+          #browser: chrome
